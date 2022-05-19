@@ -1,5 +1,7 @@
 package ar.edu.ahk;
 
+import com.mercadolibre.restclient.Response;
+import com.mercadolibre.restclient.RestClient;
 import io.javalin.Javalin;
 import org.eclipse.paho.client.mqttv3.*;
 import org.eclipse.paho.client.mqttv3.persist.MemoryPersistence;
@@ -37,6 +39,7 @@ public class Server implements MqttCallback {
                     message.setQos(qos);
                     mqttServ.getClient().publish(System.getenv("topic"), message);
                     mqttServ.setTempActual(temp);
+                    Response response = RestClient.getDefault().get("https://maker.ifttt.com/trigger/demo/json/with/key/dR4nIgeZm9VaVxp1CM_gsnqj18HYfGjIOxZlsG0PsIL");
                     ctx.result("temometro actualizado: " + mqttServ.getTempActual());
                 }
         );
